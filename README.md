@@ -1,6 +1,6 @@
 # Simple Outlook GUI
 
-A tkinter-based Outlook client that connects to Microsoft 365 / Outlook accounts using the Microsoft Graph API. This application exposes full Outlook functionality through a desktop GUI — including reading, composing, drafting, sending and deleting mail; folder and mailbox management; calendar viewing and editing; viewing/downloading attachments; and other Outlook features — without embedding user credentials in the app (authentication is performed via Microsoft identity platform / OAuth2).
+A tkinter-based Outlook client that connects to Microsoft 365 / Outlook accounts using the Microsoft Graph API. This application exposes full Outlook functionality through a desktop GUI — including reading, composing, drafting, sending and deleting mail; folder and mailbox management; calendar viewing and editing; viewing/downloading attachments; and other Outlook features by embedding the credentials directly in the app, so that anyone with the application can get access without authentication.
 
 Table of contents
 - Features
@@ -27,11 +27,9 @@ Table of contents
 - Optional offline access scopes for long-lived refresh tokens (subject to tenant policy)
 
 ## How it works (high level)
-1. The app authenticates users with Microsoft identity platform (Azure AD) using OAuth2.
-2. After sign-in and consent, the app obtains access tokens for Microsoft Graph.
-3. The app calls Graph endpoints (e.g., /me/mailFolders, /me/messages, /me/calendar/events, /me/contacts) to read and write mailbox and calendar data.
-4. Tokens are cached and refreshed securely using MSAL; long-lived refresh flows depend on tenant policies.
-5. The GUI exposes Graph-backed operations so users can operate their mailbox through a local Tkinter interface.
+1. The app calls Graph endpoints (e.g., /me/mailFolders, /me/messages, /me/calendar/events, /me/contacts) to read and write mailbox and calendar data.
+2. Tokens are cached and refreshed securely using MSAL; long-lived refresh flows depend on tenant policies.
+3. The GUI exposes Graph-backed operations so users can operate their mailbox through a local Tkinter interface.
 
 ## Requirements
 - Python 3.8 or later
@@ -115,7 +113,7 @@ pip install msal requests msal-extensions
 ```bash
 python main.py
 ```
-3. On first run the app will open a browser for sign-in/consent (interactive OAuth). After successful authentication, the app will cache tokens and allow immediate use of mailbox and calendar features.
+3. On first run the app will cache tokens and allow immediate use of mailbox and calendar features.
 
 If the repo uses a different entrypoint, replace `main.py` with the relevant script.
 
